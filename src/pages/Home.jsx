@@ -14,7 +14,7 @@ export const Home = () => {
 
   const isPostsLoading = posts.status === 'loading';
  
-  const imggUrl = process.env.REACT_IMG_PATH
+  const imggUrl = process.env.REACT_APP_IMG_PATH
 
   React.useEffect(() => {
     dispatch(fetchPosts());
