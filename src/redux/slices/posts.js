@@ -1,17 +1,17 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "../../axios";
 
-export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
+export const fetchPosts = createAsyncThunk('api/posts/fetchPosts', async () => {
     const { data } = await axios.get('/posts');
     return data;
 })
 
-export const fetchTags = createAsyncThunk('posts/fetchTags', async () => {
+export const fetchTags = createAsyncThunk('api/posts/fetchTags', async () => {
     const { data } = await axios.get('/tags');
     return data;
 })
 
-export const fetchRemovePost = createAsyncThunk('posts/fetchRemovePost', async (id) => {
+export const fetchRemovePost = createAsyncThunk('api/posts/fetchRemovePost', async (id) => {
     axios.delete(`/posts/${id}`);
 })
 
