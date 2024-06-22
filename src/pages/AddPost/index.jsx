@@ -1,14 +1,14 @@
-import React from 'react';
-import { useNavigate, Navigate, useParams } from "react-router-dom";
-import { useSelector } from 'react-redux';
-import TextField from '@mui/material/TextField';
-import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
+import TextField from '@mui/material/TextField';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import SimpleMDE from 'react-simplemde-editor';
 
-import { selectIsAuth } from '../../redux/slices/auth';
 import 'easymde/dist/easymde.min.css';
 import axios from '../../axios';
+import { selectIsAuth } from '../../redux/slices/auth';
 import styles from './AddPost.module.scss';
 
 export const AddPost = () => {
@@ -105,7 +105,7 @@ export const AddPost = () => {
   if (!window.localStorage.getItem('token') && !isAuth) {
     return <Navigate to = "/" />
   }
-
+  const imggUrl = process.env.REACT_APP_IMG_PATH
   return (
     <Paper style={{ padding: 30 }}>
       <Button onClick={() => inputFileRef.current.click()} variant="outlined" size="large">
@@ -121,7 +121,7 @@ export const AddPost = () => {
           <Button variant="contained" color="error" onClick={onClickRemoveImage}>
             Удалить
           </Button>
-          <img className={styles.image} src={`http://localhost:4444${imageUrl}`} alt="Uploaded" />
+          <img className={styles.image} src={`${imggUrl}${imageUrl}`} alt="Uploaded" />
         </>
       )}
       
