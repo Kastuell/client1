@@ -1,13 +1,13 @@
 import React from "react";
+import Markdown from 'react-markdown';
 import { useParams } from "react-router-dom";
+import remarkGfm from 'remark-gfm';
 import axios from "../axios";
-import Markdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
 
 import { Post } from "../components/Post";
 
 
-
+const imggUrl = process.env.REACT_APP_IMG_PATH
 export const FullPost = () => {
   const [data, setData] = React.useState();
   const [isLoading, setLoading] = React.useState(true);
@@ -35,7 +35,7 @@ if (isLoading) {
       <Post
          id={data._id}
          title={data.title}
-         imageUrl={data.imageUrl ? `http://localhost:4444${data.imageUrl}` : ''}
+         imageUrl={data.imageUrl ? `${imggUrl}${data.imageUrl}` : ''}
          user={data.user}
          createdAt={data.createdAt}
          viewsCount={data.viewsCount}
