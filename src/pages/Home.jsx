@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Grid from '@mui/material/Grid';
 import { Post } from '../components/Post';
-import Tovar from '../components/Tovar';
 import { TagsBlock } from '../components/TagsBlock';
+import Tovar from '../components/Tovar';
 import { fetchPosts, fetchTags } from '../redux/slices/posts';
 
 export const Home = () => {
@@ -14,6 +14,7 @@ export const Home = () => {
 
   const isPostsLoading = posts.status === 'loading';
  
+  const imggUrl = process.env.REACT_IMG_PATH
 
   React.useEffect(() => {
     dispatch(fetchPosts());
@@ -32,7 +33,7 @@ export const Home = () => {
             <Post
               id={obj._id}
               title={obj.title}
-              imageUrl={obj.imageUrl ? `http://localhost:4444${obj.imageUrl}` : ''}
+              imageUrl={obj.imageUrl ? `${imggUrl}${obj.imageUrl}` : ''}
               user={obj.user}
               createdAt={obj.createdAt}
               viewsCount={obj.viewsCount}
