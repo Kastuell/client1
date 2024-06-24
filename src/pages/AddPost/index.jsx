@@ -12,10 +12,9 @@ import { selectIsAuth } from '../../redux/slices/auth';
 import styles from './AddPost.module.scss';
 
 export const AddPost = () => {
-  const {id} = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
   const isAuth = useSelector(selectIsAuth);
-  const [ setLoading] = React.useState('false');
   const [text, setText] = React.useState('');
   const [title, setTitle] = React.useState('');
   const [tags, setTags] = React.useState('');
@@ -38,8 +37,8 @@ export const AddPost = () => {
     }
   };
 
-  const onClickRemoveImage =  () => {
-   setImageUrl('');
+  const onClickRemoveImage = () => {
+    setImageUrl('');
   };
 
   const onChange = React.useCallback((text) => {
@@ -48,18 +47,17 @@ export const AddPost = () => {
 
   const onSubmit = async () => {
     try {
-      setLoading(true);
 
       const fields = {
-        title, 
-        imageUrl, 
-        tags, 
+        title,
+        imageUrl,
+        tags,
         text
       }
 
-      const { data } = isEditing 
-      ? await axios.patch(`/posts/${id}`, fields)
-      : await axios.post('/posts', fields);
+      const { data } = isEditing
+        ? await axios.patch(`/posts/${id}`, fields)
+        : await axios.post('/posts', fields);
 
       const _id = isEditing ? id : data._id;
 
@@ -73,17 +71,17 @@ export const AddPost = () => {
   React.useEffect(() => {
     if (id) {
       axios
-      .get(`/posts/${id}`)
-      .then(({data}) => {
-        setTitle(data.title);
-        setText(data.text);
-        setImageUrl(data.imageUrl);
-        setTags(data.tags.join(','));
-      })
-      .catch(err=> {
-        console.warn(err);
-        alert('Ошибка при получении статьи')
-      })
+        .get(`/posts/${id}`)
+        .then(({ data }) => {
+          setTitle(data.title);
+          setText(data.text);
+          setImageUrl(data.imageUrl);
+          setTags(data.tags.join(','));
+        })
+        .catch(err => {
+          console.warn(err);
+          alert('Ошибка при получении статьи')
+        })
     }
   }, [id])
 
@@ -97,13 +95,14 @@ export const AddPost = () => {
       autosave: {
         enabled: true,
         delay: 1000,
+        uniqueId: 1,
       },
-    }), 
+    }),
     [],
   );
 
   if (!window.localStorage.getItem('token') && !isAuth) {
-    return <Navigate to = "/" />
+    return <Navigate to="/" />
   }
   const imggUrl = process.env.REACT_APP_IMG_PATH
   return (
@@ -111,10 +110,10 @@ export const AddPost = () => {
       <Button onClick={() => inputFileRef.current.click()} variant="outlined" size="large">
         Загрузить превью
       </Button>
-      <input 
-        ref={inputFileRef} 
-        type="file" 
-        onChange={handleChangeFile} 
+      <input
+        ref={inputFileRef}
+        type="file"
+        onChange={handleChangeFile}
         hidden />
       {imageUrl && (
         <>
@@ -124,7 +123,7 @@ export const AddPost = () => {
           <img className={styles.image} src={`${imggUrl}${imageUrl}`} alt="Uploaded" />
         </>
       )}
-      
+
       <br />
       <br />
       <TextField
@@ -135,7 +134,7 @@ export const AddPost = () => {
         onChange={e => setTitle(e.target.value)}
         fullWidth
       />
-      
+
       <SimpleMDE className={styles.editor} value={text} onChange={onChange} options={options} />
       <div className={styles.buttons}>
         <Button onClick={onSubmit} size="large" variant="contained">
